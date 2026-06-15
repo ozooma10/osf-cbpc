@@ -1,0 +1,12 @@
+{
+  "_comment": "OSF Body Physics female jiggle profile. Bones bind by name; ones absent from the loaded skeleton are skipped (warned once). VANILLA has only L_Butt/R_Butt — L_Pecs/R_Pecs/C_Belly need an extended skeleton (e.g. SF Extended Skeleton) AND a body/outfit mesh weighted to those bones, else moving the bone won't deform anything. Names here match the SF-Extended-Skeleton convention seen in the Jiggle Physics mod's skeleton.nif; confirm against the 'ALL node names' dump in the log after installing yours. 'bone' = node to jiggle; parent frame is auto-derived (so 'parent' is ignored). stiffness/damping/gravity/maxOffset are per local axis [x,y,z]: stiffness=snappiness, damping=settle speed, maxOffset=max travel (the cone-limit analog).",
+  "schema": "osf.physics/0.1",
+  "profile": "vanilla-female",
+  "bones": [
+    { "bone": "L_Butt",  "parent": "(auto)", "mass": 1.0, "stiffness": [450, 450, 450], "damping": [28, 28, 28], "gravity": [0, 0, 0], "maxOffset": [0.6, 0.6, 0.7] },
+    { "bone": "R_Butt",  "parent": "(auto)", "mass": 1.0, "stiffness": [450, 450, 450], "damping": [28, 28, 28], "gravity": [0, 0, 0], "maxOffset": [0.6, 0.6, 0.7] },
+    { "bone": "L_Pecs",  "parent": "(auto)", "mass": 1.0, "stiffness": [120, 120, 120], "damping": [12, 12, 12], "gravity": [0, 0, 0], "maxOffset": [2.0, 2.0, 2.0] },
+    { "bone": "R_Pecs",  "parent": "(auto)", "mass": 1.0, "stiffness": [120, 120, 120], "damping": [12, 12, 12], "gravity": [0, 0, 0], "maxOffset": [2.0, 2.0, 2.0] },
+    { "bone": "C_Belly", "parent": "(auto)", "mass": 1.0, "stiffness": [500, 500, 500], "damping": [28, 28, 28], "gravity": [0, 0, 0], "maxOffset": [0.4, 0.4, 0.4] }
+  ]
+}
