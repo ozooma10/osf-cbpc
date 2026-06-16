@@ -1,4 +1,4 @@
-# OSF Body Physics — perf harness build (portable g++/clang fallback).
+# OSF CBPC — perf harness build (portable g++/clang fallback).
 #
 # The canonical build is xmake (see bench/xmake.lua), which also builds with
 # MSVC for game-representative numbers. This Makefile exists so the harness can

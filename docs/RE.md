@@ -1,4 +1,4 @@
-# Engine RE ground truth (OSF Body Physics)
+# Engine RE ground truth (OSF CBPC)
 
 Every address/offset this plugin depends on, and the post-patch surface. All of
 it is **inherited from the sibling `OSF Animation` project's `docs/RE.md`**,

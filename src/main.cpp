@@ -53,7 +53,7 @@ SFSE_PLUGIN_LOAD(const SFSE::LoadInterface* a_sfse)
 		SFSE::GetPluginName(), SFSE::GetPluginVersion().string(),
 		kVerifiedGameVersion.string(), runtime.string());
 	if (runtime != kVerifiedGameVersion) {
-		REX::WARN("Unsupported game version: OSF Body Physics supports Starfield {} only, but this is {}. "
+		REX::WARN("Unsupported game version: OSF CBPC supports Starfield {} only, but this is {}. "
 			"The jiggle hook self-disables on a mismatch — update the game to {} (or wait for a plugin update).",
 			kVerifiedGameVersion.string(), runtime.string(), kVerifiedGameVersion.string());
 	}

@@ -1,4 +1,4 @@
-# OSF Body Physics
+# OSF CBPC
 
 SFSE plugin — a **CBPC-lite** spring/damper body-jiggle solver for Starfield.
 Standalone (no OSF Animation dependency); drives the engine's own rig bones at
@@ -11,8 +11,10 @@ runtime. Always-loaded session brief. Deeper docs: architecture & roadmap →
 - **Version:** offsets verified against **1.16.244.0**. The one vtable hook
   self-disables on a slot mismatch; the layout-fact offsets it READS are not
   AddressLib-gated → re-verify **docs/RE.md** after any game patch.
-- **repo == xmake target == MO2 mod == `OSF Body Physics`.** Deploy via
-  `XSE_SF_MODS_PATH`.
+- **xmake target == MO2 mod == deploy folder == `OSF CBPC`** (the dll, the
+  `%XSE_SF_MODS_PATH%\OSF CBPC\` deploy dir, and the runtime
+  `Data\SFSE\Plugins\OSF CBPC\` profile dir all key off this). The git repo
+  folder on disk is still `OSF Body Physics`. Deploy via `XSE_SF_MODS_PATH`.
 
 ## The one invariant (do not violate)
 

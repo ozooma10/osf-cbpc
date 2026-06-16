@@ -1,4 +1,4 @@
-# OSF Body Physics
+# OSF CBPC
 
 A **CBPC-lite** body-physics SFSE plugin for Starfield: a per-bone spring/damper
 jiggle solver (breast / belly / butt) that drives the engine's own rig bones at
@@ -26,20 +26,20 @@ xmake                                       :: configure (-y first time), build,
 
 - C++23, **xmake only** (no CMake/vcpkg). CLSF is a submodule at `lib/commonlibsf`
   on branch `forge` (fork `ozooma10/commonlibsf`).
-- With `XSE_SF_MODS_PATH` set, the build deploys `OSF Body Physics.dll` and the
-  bundled profiles to `%XSE_SF_MODS_PATH%\OSF Body Physics\`.
+- With `XSE_SF_MODS_PATH` set, the build deploys `OSF CBPC.dll` and the
+  bundled profiles to `%XSE_SF_MODS_PATH%\OSF CBPC\`.
 - Requires SFSE + Address Library + the version DB for 1.16.244, same as your
   other OSF plugins.
 
 ## Install / test
 
 Enable in MO2, launch via SFSE, then read
-`Documents\My Games\Starfield\SFSE\Logs\OSF Body Physics.log`. The feature report
+`Documents\My Games\Starfield\SFSE\Logs\OSF CBPC.log`. The feature report
 line tells you whether the hook verified and installed on this game build.
 
 ## Config
 
-Profiles live in `Data\SFSE\Plugins\OSF Body Physics\profiles\*.json`
+Profiles live in `Data\SFSE\Plugins\OSF CBPC\profiles\*.json`
 (`dist\...` in this repo is the source). See `vanilla-female.json`. Each entry
 binds a `bone` to a driving `parent` and sets per-axis spring tuning. These
 profiles are intended to become **OSF Body contract** data, validated by its

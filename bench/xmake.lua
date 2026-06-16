@@ -1,4 +1,4 @@
--- OSF Body Physics — perf harness (xmake build).
+-- OSF CBPC — perf harness (xmake build).
 --
 -- Self-contained project (NOT included by the plugin's root xmake.lua). Build it
 -- with MSVC for game-representative numbers (the plugin ships as an MSVC DLL), or
@@ -15,7 +15,7 @@
 -- The Makefile alongside this file is the portable, already-verified path
 -- (g++/clang on Linux/CI); this xmake build mirrors it for the MSVC toolchain.
 
-set_project("osf-body-physics-bench")
+set_project("osf-cbpc-bench")
 set_xmakever("2.8.0")
 set_languages("c++23")
 set_warnings("allextra")

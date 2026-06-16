@@ -99,16 +99,16 @@ namespace OSF::Physics
 					}
 				}
 			}
-			REX::INFO("OSF Body Physics: skeleton has {} nodes. LIKELY jiggle/anchor bones >>> {}",
+			REX::INFO("OSF CBPC: skeleton has {} nodes. LIKELY jiggle/anchor bones >>> {}",
 				a_modelNode->nodes.size(), candidates.empty() ? "(no keyword matches)" : candidates);
-			REX::INFO("OSF Body Physics: ALL node names >>> {}", all);
+			REX::INFO("OSF CBPC: ALL node names >>> {}", all);
 		}
 
 		for (const auto& spec : profile->bones) {
 			const auto bone = byName.find(ToLower(spec.bone));
 			if (bone == byName.end()) {
 				if (!loggedBind) {  // warn once per skeleton identity, not every rebind
-					REX::WARN("OSF Body Physics: bone '{}' not on this skeleton — skipping", spec.bone);
+					REX::WARN("OSF CBPC: bone '{}' not on this skeleton — skipping", spec.bone);
 				}
 				continue;
 			}
@@ -119,7 +119,7 @@ namespace OSF::Physics
 			RE::NiAVObject* parentNode = boneNode ? boneNode->parent : nullptr;
 			if (!parentNode) {
 				if (!loggedBind) {
-					REX::WARN("OSF Body Physics: bone '{}' has no parent node — skipping", spec.bone);
+					REX::WARN("OSF CBPC: bone '{}' has no parent node — skipping", spec.bone);
 				}
 				continue;
 			}
@@ -128,7 +128,7 @@ namespace OSF::Physics
 
 		if (!loggedBind) {
 			loggedBind = true;
-			REX::INFO("OSF Body Physics: bound {}/{} jiggle bones (profile '{}', {} skeleton nodes)",
+			REX::INFO("OSF CBPC: bound {}/{} jiggle bones (profile '{}', {} skeleton nodes)",
 				bones.size(), profile->bones.size(), profile->name, cachedBoneCount);
 		}
 	}

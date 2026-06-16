@@ -4,7 +4,7 @@ namespace OSF::Physics
 {
 	namespace
 	{
-		constexpr const char* kProfileDir = "Data/SFSE/Plugins/OSF Body Physics/profiles";
+		constexpr const char* kProfileDir = "Data/SFSE/Plugins/OSF CBPC/profiles";
 		constexpr const char* kDefaultName = "vanilla-female";
 
 		// Read a 3-vector ([x,y,z]) from JSON, leaving the default if absent/malformed.

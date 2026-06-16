@@ -1,4 +1,4 @@
-# OSF Body Physics — performance model & optimization roadmap
+# OSF CBPC — performance model & optimization roadmap
 
 The reference the `bench/` harness is built around. `bench/` measures the two
 cost regimes below so each optimization can be validated before/after. This doc

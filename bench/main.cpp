@@ -1,4 +1,4 @@
-// OSF Body Physics — performance harness.
+// OSF CBPC — performance harness.
 //
 // Two benchmarks matching the two cost regimes in docs/PERF.md:
 //   * solver   — real JiggleSolver::StepBone over the real CLSF Ni* operators
@@ -160,7 +160,7 @@ int main(int argc, char** argv)
 	}
 
 	// ---------------------------------------------------------------- report --
-	std::printf("OSF Body Physics — perf harness   [label: %s]\n", args.label.c_str());
+	std::printf("OSF CBPC — perf harness   [label: %s]\n", args.label.c_str());
 	std::printf("threads=%zu  skeletons=%zu  tracked=%zu  fps=%.0f\n\n",
 		args.threads, args.skeletons, args.tracked, args.fps);
 

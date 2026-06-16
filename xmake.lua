@@ -2,7 +2,7 @@
 includes("lib/commonlibsf")
 
 -- set project constants
-set_project("OSF Body Physics")
+set_project("OSF CBPC")
 set_version("0.1.0")
 set_license("GPL-3.0")
 set_languages("c++23")
@@ -17,11 +17,11 @@ add_rules("plugin.vsxmake.autoupdate")
 
 -- define target
 -- target name == repo folder == MO2 mod folder (deploy goes to XSE_SF_MODS_PATH\<target name>)
-target("OSF Body Physics")
+target("OSF CBPC")
     add_rules("commonlibsf.plugin", {
-        name = "OSF Body Physics",
+        name = "OSF CBPC",
         author = "ozooma10",
-        description = "OSF Body Physics - CBPC-lite spring/damper for Starfield",
+        description = "OSF CBPC - CBPC-lite spring/damper for Starfield",
         email = "98544147+ozooma10@users.noreply.github.com"
     })
 
@@ -40,6 +40,6 @@ target("OSF Body Physics")
         if mods then
             local dst = path.join(mods, target:name(), "SFSE", "Plugins", target:name(), "profiles")
             os.mkdir(dst)
-            os.cp("dist/SFSE/Plugins/OSF Body Physics/profiles/*.json", dst .. "/")
+            os.cp("dist/SFSE/Plugins/OSF CBPC/profiles/*.json", dst .. "/")
         end
     end)

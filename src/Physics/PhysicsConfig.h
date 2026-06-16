@@ -2,7 +2,7 @@
 
 // Physics profiles: which bones jiggle, their parent (motion source), and the
 // per-bone spring tuning. Loaded from JSON under
-//   Data/SFSE/Plugins/OSF Body Physics/profiles/*.json
+//   Data/SFSE/Plugins/OSF CBPC/profiles/*.json
 // at kPostDataLoad. Falls back to a built-in default if none are present.
 //
 // THE OSF BODY BRIDGE: a profile is exactly the kind of versioned, name-keyed

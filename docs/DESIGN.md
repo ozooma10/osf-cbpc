@@ -1,4 +1,4 @@
-# OSF Body Physics — Design & Roadmap
+# OSF CBPC — Design & Roadmap
 
 A per-bone spring/damper jiggle solver that drives Starfield's own rig bones at
 runtime (CBPC-lite).

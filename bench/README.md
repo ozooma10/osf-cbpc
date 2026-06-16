@@ -1,4 +1,4 @@
-# OSF Body Physics — performance harness
+# OSF CBPC — performance harness
 
 A self-contained microbenchmark for tracking how changes affect the plugin's two
 hot-path cost regimes (see `../docs/PERF.md`). Run it **before** a change, run it
