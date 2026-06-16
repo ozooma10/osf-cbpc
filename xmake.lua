@@ -21,7 +21,7 @@ target("OSF Body Physics")
     add_rules("commonlibsf.plugin", {
         name = "OSF Body Physics",
         author = "ozooma10",
-        description = "OSF Body Physics — CBPC-lite spring/damper body jiggle for Starfield",
+        description = "OSF Body Physics - CBPC-lite spring/damper for Starfield",
         email = "98544147+ozooma10@users.noreply.github.com"
     })
 

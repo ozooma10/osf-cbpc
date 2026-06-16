@@ -2,17 +2,14 @@
 
 A **CBPC-lite** body-physics SFSE plugin for Starfield: a per-bone spring/damper
 jiggle solver (breast / belly / butt) that drives the engine's own rig bones at
-runtime. It is **standalone** — it works with the game's native animation and
-does **not** require OSF Animation — and it reuses no third-party rig code, only
-the reverse-engineered engine layout facts (see `docs/RE.md`).
+runtime.
 
-> Status: **scaffold (M0)**. Builds against Starfield 1.16.244 + the CLSF `forge`
-> branch. The hot path, hook, config, and solver are implemented; actor coverage
-> is player-only and collision is not built yet. Roadmap in `docs/DESIGN.md`.
+> Status: **scaffold (M0)**. Builds against Starfield 1.16.244. The hot path, hook, config, and solver are implemented.
+> actor coverage is player-only and collision is not built yet. Roadmap in `docs/DESIGN.md`.
 
-## How it works (one paragraph)
+## How it works
 
-It installs a single vtable hook on `BGSModelNode::Update` (slot 2) — the
+It installs a single vtable hook on `BGSModelNode::Update` (slot 2) - the
 RE-proven, once-per-skeleton-per-frame point where a write into the flat rig
 buffer survives the engine's compose+commit. Pre-orig, for each tracked actor it
 reads the parent bone's world motion, runs a spring/damper per jiggle bone, and
