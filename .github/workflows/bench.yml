@@ -81,15 +81,6 @@ jobs:
           ./build/bench-avx2    $BENCH_ARGS --json --label ci-opt     > opt.json
           ./build/bench-release $BENCH_ARGS  # human-readable to the log
 
-      - name: Compare to baseline
-        working-directory: bench
-        run: |
-          python3 compare.py \
-            --baseline results/ci-baseline.json \
-            --current current.json \
-            --opt opt.json \
-            --threshold 25 --gate
-
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v4
@@ -98,6 +89,33 @@ jobs:
           path: |
             bench/current.json
             bench/opt.json
+
+  # --- regression gate: separate job so a regression NEVER suppresses the trend ---
+  # Kept out of the `bench` job on purpose. If the gate lived in `bench`, a
+  # regression would fail that job and skip `publish-trend` (needs: bench) -- so a
+  # real perf regression would silently VANISH from the trend chart instead of
+  # showing up as the dip it is. By gating in its own job, `bench` still succeeds,
+  # `publish-trend` still records the point, and this job is what turns the PR red.
+  gate:
+    needs: bench
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4   # compare.py + committed baseline (python only, no submodules)
+
+      - name: Download bench results
+        uses: actions/download-artifact@v4
+        with:
+          name: bench-results
+          path: bench
+
+      - name: Compare to baseline
+        working-directory: bench
+        run: |
+          python3 compare.py \
+            --baseline results/ci-baseline.json \
+            --current current.json \
+            --opt opt.json \
+            --threshold 25 --gate
 
   # --- historical trend: append to the time series on gh-pages + render charts ---
   # Split into its own job so it can serialize on a dedicated, NON-cancelling
@@ -140,9 +158,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true                 # creates gh-pages on first run, then appends
           benchmark-data-dir-path: dev/bench
-          # The hard PR gate is compare.py; here we only alert on a clear (1.5x)
-          # trend regression as a commit comment — never fail (it would be redundant
-          # and noisier than compare.py's stable-metric gate).
+          # The hard PR gate is the separate `gate` job (compare.py); here we only
+          # alert on a clear (1.5x) trend regression as a commit comment — never
+          # fail (it would be redundant and noisier than that stable-metric gate).
           alert-threshold: '150%'
           comment-on-alert: true
           fail-on-alert: false
