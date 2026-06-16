@@ -18,7 +18,7 @@ Research (June 2026) pinned down four constraints:
    commits in the same call, and keeps firing for AI-frozen actors (unlike
    `AnimationManager::Update`). Integrate and write both happen there.
 
-## Standalone, one hook
+## Standalone, one hook 
 
 This is its own plugin. It installs its own `BGSModelNode::Update` slot-2 hook. The hot path
 receives the live `BGSModelNode*`, so the registry is keyed by it. slot 2 fires once per
