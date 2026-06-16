@@ -5,56 +5,56 @@
     {
       "name": "solver/player (5 bones, scatter)",
       "unit": "ns/bone",
-      "min_ns": 56.6129,
-      "median_ns": 56.9564,
-      "p99_ns": 60.1811,
-      "mean_ns": 57.3694,
-      "ops_per_sec": 17557289.4
+      "min_ns": 50.4104,
+      "median_ns": 50.56,
+      "p99_ns": 56.4959,
+      "mean_ns": 51.1163,
+      "ops_per_sec": 19778481.0
     },
     {
       "name": "solver/crowd (M2-scale)",
       "unit": "ns/bone",
-      "min_ns": 56.1634,
-      "median_ns": 56.3702,
-      "p99_ns": 71.8689,
-      "mean_ns": 57.9653,
-      "ops_per_sec": 17739867.7
+      "min_ns": 50.2943,
+      "median_ns": 50.4954,
+      "p99_ns": 66.1983,
+      "mean_ns": 51.0564,
+      "ops_per_sec": 19803779.3
     },
     {
       "name": "registry/current   1-thread",
       "unit": "ns/lookup",
-      "min_ns": 38.166,
-      "median_ns": 38.166,
-      "p99_ns": 38.166,
-      "mean_ns": 38.166,
-      "ops_per_sec": 26201316.3
+      "min_ns": 40.4008,
+      "median_ns": 40.4008,
+      "p99_ns": 40.4008,
+      "mean_ns": 40.4008,
+      "ops_per_sec": 24751964.3
     },
     {
       "name": "registry/snapshot  1-thread",
       "unit": "ns/lookup",
-      "min_ns": 1.6812,
-      "median_ns": 1.6812,
-      "p99_ns": 1.6812,
-      "mean_ns": 1.6812,
-      "ops_per_sec": 594797612.0
+      "min_ns": 1.8472,
+      "median_ns": 1.8472,
+      "p99_ns": 1.8472,
+      "mean_ns": 1.8472,
+      "ops_per_sec": 541348104.8
     },
     {
       "name": "registry/current   N-thread",
       "unit": "ns/lookup",
-      "min_ns": 28.4416,
-      "median_ns": 28.4416,
-      "p99_ns": 28.4416,
-      "mean_ns": 28.4416,
-      "ops_per_sec": 35159752.0
+      "min_ns": 48.5376,
+      "median_ns": 48.5376,
+      "p99_ns": 48.5376,
+      "mean_ns": 48.5376,
+      "ops_per_sec": 20602578.1
     },
     {
       "name": "registry/snapshot  N-thread",
       "unit": "ns/lookup",
-      "min_ns": 1.704,
-      "median_ns": 1.704,
-      "p99_ns": 1.704,
-      "mean_ns": 1.704,
-      "ops_per_sec": 586837308.0
+      "min_ns": 0.9197,
+      "median_ns": 0.9197,
+      "p99_ns": 0.9197,
+      "mean_ns": 0.9197,
+      "ops_per_sec": 1087302189.8
     }
   ]
 }
