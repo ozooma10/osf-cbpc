@@ -56,3 +56,22 @@ for _, cfg in ipairs(configs) do
         end
     end)
 end
+
+-- Framerate-consistency gate (correctness, NOT perf): drives the real StepBone at
+-- 30/60/144 fps and exits non-zero if the jiggle differs across rates. Plain /O2 —
+-- a correctness check shouldn't depend on the codegen tiers.
+--     xmake build fps-test  &&  xmake run fps-test
+target("fps-test", function()
+    set_kind("binary")
+    set_default(false)
+
+    add_files(path.join(os.scriptdir(), "fps_test.cpp"))
+    add_files(path.join(os.scriptdir(), "clsf_ops.cpp"))
+    add_files(path.join(root, "src/Physics/JiggleSolver.cpp"))
+
+    add_includedirs(root,
+        path.join(root, "src"),
+        path.join(root, "lib/commonlibsf/include"))
+
+    add_forceincludes(path.join(os.scriptdir(), "prelude.h"))
+end)

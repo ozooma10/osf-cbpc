@@ -68,6 +68,12 @@ jobs:
           make CONFIG=release
           make CONFIG=avx2
 
+      # Correctness gate (regime-independent): the solver's jiggle must match across
+      # simulated 30/60/144 fps. Fails the job on divergence. Fast, so run it first.
+      - name: Framerate-consistency gate
+        working-directory: bench
+        run: make CONFIG=release check
+
       - name: Run harness
         working-directory: bench
         run: |
@@ -128,7 +134,7 @@ jobs:
       - name: Record trend (github-action-benchmark)
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          name: OSF Body Physics
+          name: OSF CBPC
           tool: customSmallerIsBetter
           output-file-path: bench/gha.json
           github-token: ${{ secrets.GITHUB_TOKEN }}

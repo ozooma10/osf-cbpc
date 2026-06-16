@@ -18,6 +18,29 @@ In a quiet interior, B dominates and the plugin is ~free. In a populated city,
 **A dominates by 1–2 orders of magnitude** and does no useful work for ~99% of
 calls (those skeletons aren't tracked). Optimize A first.
 
+## Framerate normalization (fixed timestep)
+
+`StepBone` integrates the spring in fixed `kTimeTick` (1/60 s) sub-steps via a
+per-bone accumulator, not one variable-dt Euler step — so the same tuning behaves
+identically at 30/60/144 fps (a single Euler step's error and effective damping
+scale with dt). This has a regime-B cost shape: per-frame solver work now scales
+with the sub-step count ≈ `dt × 60`, capped at `kMaxSubSteps`. So **≥60 fps costs
+≤1 step/frame** (often 0 at 144 fps, since the accumulator only fires a tick every
+~2–3 frames — *cheaper* than before), while **30 fps costs ~2 steps/frame** (~2× the
+integration work, paid only by the few tracked actors in regime B — negligible at
+player-only M1 scale, worth watching at M2 crowd scale on a 30 fps machine). On top
+of the per-step work there is **fixed per-call overhead**: a tick-interval feed-forward
+velocity and a bounded output interpolation between the two most recent tick lags
+(standard fixed-timestep render interpolation — it removes the >60 fps judder and is
+what makes high fps actually match low fps). `BoneState` grew by three `NiPoint3`
+(prev-tick target + the two interpolated lags) and the accumulator. In the no-LTO
+`solver/*` bench (`dt = 1/60`, one sub-step) this lands around +40% ns/bone vs the
+plain Euler step — sub-microsecond for the player, and recoverable by Tier 3.2's
+`__m128` rewrite (the inner sub-step body and the output blend are both branch-free
+3-axis math). Correctness (the curves actually matching across rates — ~1.8% worst
+case vs the unnormalized 92%) is gated offline by `bench/fps_test.cpp` — see
+Validation below.
+
 ## Findings, ranked by ROI
 
 ### Tier 1 — build/codegen flags (trivial, no behavior change)
@@ -66,6 +89,10 @@ calls (those skeletons aren't tracked). Optimize A first.
 4. Tier 4 as M2/M3 land.
 
 ## Validation
+- **Offline, correctness:** `bench/fps_test.cpp` (the `check` target / `fps-test`)
+  asserts the jiggle displacement curve matches across simulated 30/60/144 fps to
+  within tolerance — the framerate-normalization gate. Run via `make check` or
+  `xmake run fps-test`; CI gates on it.
 - **Offline, relative:** `bench/` before/after every change (see its README).
 - **In-game, absolute:** Superluminal / VTune attached to a running Starfield,
   sampling inside `Hook_ModelNodeUpdate` while walking a populated area. The

@@ -17,6 +17,25 @@ SIMD rewrite all show up in the numbers.
 multi-threaded (the SRWLock cache-line contention that grows with crowd size ×
 core count). The headline line estimates the per-frame hook tax for a crowd.
 
+## Correctness gate: framerate consistency
+
+Separate from the perf numbers, `fps_test.cpp` drives the real `StepBone` at
+simulated **30/60/144 fps** over one continuous trajectory and asserts the
+resulting jiggle displacement curves agree within tolerance — i.e. the tuning is
+framerate-independent (the fixed-timestep sub-step accumulator in `JiggleSolver`).
+It also asserts a single-step Euler yardstick diverges far more, so the gate can't
+quietly go vacuous. Exits non-zero on failure.
+
+```sh
+cd bench
+make check                                    # g++/clang: build + run the gate
+xmake build fps-test && xmake run fps-test    # MSVC (game-representative)
+```
+
+CI runs this on every PR touching the solver and **fails the job on divergence**
+(see `.github/workflows/bench.yml`). It is correctness-only — it does not feed the
+perf baseline or the trend chart.
+
 ## Build & run
 
 **Portable (verified, Linux/CI) — Makefile:**
