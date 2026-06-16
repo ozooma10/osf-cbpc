@@ -53,14 +53,31 @@ xmake build bench-opt && xmake run bench-opt        # LTO + /arch:AVX2 + /fp:con
 
 ## Tracking changes over time
 
+Local before/after, by hand (these `results/*.json` are gitignored scratch):
 ```sh
-mkdir -p results
 ./build/bench-release --json --label before > results/before.json
 # … make a change, rebuild …
 ./build/bench-release --json --label after  > results/after.json
-diff <(jq -S . results/before.json) <(jq -S . results/after.json)
+python3 compare.py --baseline results/before.json --current results/after.json
 ```
-Commit a baseline `results/*.json` so regressions are visible in review.
+
+## Continuous integration
+
+`.github/workflows/bench.yml` runs this harness on every PR that touches the
+solver, the harness, or the CLSF headers, and compares against the committed
+baseline `results/ci-baseline.json` via `compare.py`. The delta table is posted
+to the job summary; a *stable* metric regressing past 25% fails the check
+(the noisy multi-thread contention numbers are reported but never gate).
+
+The baseline must come from CI hardware to be comparable, so:
+- `results/ci-baseline.json` is **regenerated and committed automatically on
+  every push to `master`** (and via the *Update baseline* `workflow_dispatch`).
+- The seed committed here is flagged `"placeholder": true` and is **advisory
+  only** until that first CI refresh replaces it — so it never causes a spurious
+  failure from cross-hardware differences.
+
+CI pins `--threads 4` and a fixed workload (see `BENCH_ARGS` in the workflow) so
+runs are comparable across runners.
 
 ## How to read it
 

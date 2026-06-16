@@ -6,3 +6,9 @@ build/
 *.pdb
 *.ilk
 *.exe
+
+# transient CI run output (the committed baseline lives in results/ci-baseline.json)
+current.json
+opt.json
+results/*.json
+!results/ci-baseline.json

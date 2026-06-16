@@ -1,0 +1,55 @@
+{
+  "label": "ci-baseline",
+  "placeholder": true,
+  "_note": "Seed baseline generated off-CI (not on a GitHub runner). Deltas are advisory until CI regenerates this on a push to master or via the 'Update baseline' workflow. Params: --batches 150 --frames 1500 --reg-frames 4000 --skeletons 128 --tracked 1 --threads 4.",
+  "results": [
+    {
+      "name": "solver/player (5 bones, scatter)",
+      "min_ns": 40.136,
+      "median_ns": 41.8669,
+      "p99_ns": 50.4203,
+      "mean_ns": 42.3254,
+      "ops_per_sec": 23885198.2
+    },
+    {
+      "name": "solver/crowd (M2-scale)",
+      "min_ns": 39.982,
+      "median_ns": 41.0339,
+      "p99_ns": 57.9016,
+      "mean_ns": 41.7432,
+      "ops_per_sec": 24370096.2
+    },
+    {
+      "name": "registry/current   1-thread",
+      "min_ns": 44.8244,
+      "median_ns": 44.8244,
+      "p99_ns": 44.8244,
+      "mean_ns": 44.8244,
+      "ops_per_sec": 22309259.3
+    },
+    {
+      "name": "registry/snapshot  1-thread",
+      "min_ns": 1.7058,
+      "median_ns": 1.7058,
+      "p99_ns": 1.7058,
+      "mean_ns": 1.7058,
+      "ops_per_sec": 586234257.8
+    },
+    {
+      "name": "registry/current   N-thread",
+      "min_ns": 113.2496,
+      "median_ns": 113.2496,
+      "p99_ns": 113.2496,
+      "mean_ns": 113.2496,
+      "ops_per_sec": 8830052.6
+    },
+    {
+      "name": "registry/snapshot  N-thread",
+      "min_ns": 0.4573,
+      "median_ns": 0.4573,
+      "p99_ns": 0.4573,
+      "mean_ns": 0.4573,
+      "ops_per_sec": 2186863655.2
+    }
+  ]
+}
