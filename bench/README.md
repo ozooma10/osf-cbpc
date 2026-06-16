@@ -63,18 +63,34 @@ python3 compare.py --baseline results/before.json --current results/after.json
 
 ## Continuous integration
 
-`.github/workflows/bench.yml` runs this harness on every PR that touches the
-solver, the harness, or the CLSF headers, and compares against the committed
-baseline `results/ci-baseline.json` via `compare.py`. The delta table is posted
-to the job summary; a *stable* metric regressing past 25% fails the check
-(the noisy multi-thread contention numbers are reported but never gate).
+`.github/workflows/bench.yml` runs this harness on CI. There are two
+complementary pieces:
 
-The baseline must come from CI hardware to be comparable, so:
+**1. PR gate (`compare.py`)** — on every PR touching the solver, the harness, or
+the CLSF headers, the harness runs and is compared against the committed baseline
+`results/ci-baseline.json`. The delta table is posted to the job summary; a
+*stable* metric regressing past 25% fails the check (the noisy multi-thread
+contention numbers are reported but never gate). The baseline must come from CI
+hardware to be comparable, so:
 - `results/ci-baseline.json` is **regenerated and committed automatically on
   every push to `master`** (and via the *Update baseline* `workflow_dispatch`).
 - The seed committed here is flagged `"placeholder": true` and is **advisory
   only** until that first CI refresh replaces it — so it never causes a spurious
   failure from cross-hardware differences.
+
+**2. Historical trend (`benchmark-action/github-action-benchmark`)** — on every
+push to `master` (and the *Update baseline* dispatch), `to_gha.py` converts the
+run into the action's `customSmallerIsBetter` format and the action appends it to
+a time series on the **`gh-pages`** branch (under `dev/bench/`) and renders an
+interactive per-metric chart. One authoritative data point per merge; PR/feature
+numbers never pollute the trend. A clear 1.5× regression posts a commit comment,
+but never fails the build (that's `compare.py`'s job). Noisy `N-thread` metrics
+are excluded from the trend by default (`to_gha.py --all` to include them).
+
+To view the dashboard, enable **Settings → Pages → Source: `gh-pages` branch
+(`/root`)**; the charts live at
+`https://<owner>.github.io/<repo>/dev/bench/`. The first `master` run creates the
+`gh-pages` branch automatically.
 
 CI pins `--threads 4` and a fixed workload (see `BENCH_ARGS` in the workflow) so
 runs are comparable across runners.
