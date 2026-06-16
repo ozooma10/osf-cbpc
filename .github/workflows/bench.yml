@@ -68,6 +68,12 @@ jobs:
           make CONFIG=release
           make CONFIG=avx2
 
+      # Correctness gate (regime-independent): the solver's jiggle must match across
+      # simulated 30/60/144 fps. Fails the job on divergence. Fast, so run it first.
+      - name: Framerate-consistency gate
+        working-directory: bench
+        run: make CONFIG=release check
+
       - name: Run harness
         working-directory: bench
         run: |

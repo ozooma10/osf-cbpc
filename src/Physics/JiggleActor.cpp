@@ -179,7 +179,9 @@ namespace OSF::Physics
 				continue;
 			}
 			// rest = the bone's animated local translation this frame; the solver
-			// returns the lag offset to layer on top of it.
+			// returns the lag offset to layer on top of it. We pass the real (clamped)
+			// frame dt — StepBone sub-steps it at a fixed tick internally, so the same
+			// tuning behaves identically at 30/60/144 fps (see JiggleSolver.cpp).
 			const RE::NiPoint3 rest = local[bone.boneRig].translate;
 			const RE::NiPoint3 disp = StepBone(bone.state, bone.params,
 				bone.parentNode->world.translate, bone.parentNode->world.rotate, rest, dt);

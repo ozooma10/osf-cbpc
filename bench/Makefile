@@ -20,10 +20,12 @@ ROOT    := ..
 CXX     ?= g++
 CONFIG  ?= release
 
-SRC := \
-	main.cpp \
+SOLVER_SRC := \
 	clsf_ops.cpp \
 	$(ROOT)/src/Physics/JiggleSolver.cpp
+
+SRC     := main.cpp $(SOLVER_SRC)      # perf harness
+FPS_SRC := fps_test.cpp $(SOLVER_SRC)  # framerate-consistency correctness gate
 
 INCLUDES := -I$(ROOT) -I$(ROOT)/src -I$(ROOT)/lib/commonlibsf/include
 COMMON   := -std=c++23 -pthread -Wall -Wextra -Wno-unused-parameter \
@@ -37,9 +39,10 @@ FLAGS_debug   := -O0 -g -fsanitize=address,undefined
 
 CXXFLAGS := $(COMMON) $(FLAGS_$(CONFIG))
 
-OUT := build/bench-$(CONFIG)
+OUT     := build/bench-$(CONFIG)
+FPS_OUT := build/fps-test-$(CONFIG)
 
-.PHONY: all run clean
+.PHONY: all run check clean
 all: $(OUT)
 
 $(OUT): $(SRC) prelude.h bench_util.h solver_bench.h registry_bench.h
@@ -49,6 +52,16 @@ $(OUT): $(SRC) prelude.h bench_util.h solver_bench.h registry_bench.h
 
 run: $(OUT)
 	./$(OUT)
+
+# Framerate-consistency gate (correctness, not perf): exits non-zero if the solver's
+# jiggle differs across simulated 30/60/144 fps beyond tolerance. See fps_test.cpp.
+$(FPS_OUT): $(FPS_SRC) prelude.h fps_consistency.h $(ROOT)/src/Physics/JiggleSolver.h
+	@mkdir -p build
+	$(CXX) $(CXXFLAGS) $(FPS_SRC) -o $(FPS_OUT)
+	@echo "built $(FPS_OUT)  (CONFIG=$(CONFIG), CXX=$(CXX))"
+
+check: $(FPS_OUT)
+	./$(FPS_OUT)
 
 clean:
 	rm -rf build
