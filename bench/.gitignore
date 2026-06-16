@@ -1,0 +1,8 @@
+# build artifacts
+build/
+.xmake/
+*.o
+*.obj
+*.pdb
+*.ilk
+*.exe
