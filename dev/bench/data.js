@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1781629146947,
+  "lastUpdate": 1781640597729,
   "repoUrl": "https://github.com/ozooma10/osf-cbpc",
   "entries": {
     "OSF CBPC": [
@@ -52,6 +52,58 @@ window.BENCHMARK_DATA = {
             "range": "± 0.00",
             "unit": "ns/lookup",
             "extra": "median 1.85 ns, mean 1.85 ns"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "98544147+ozooma10@users.noreply.github.com",
+            "name": "ozooma10",
+            "username": "ozooma10"
+          },
+          "committer": {
+            "email": "98544147+ozooma10@users.noreply.github.com",
+            "name": "ozooma10",
+            "username": "ozooma10"
+          },
+          "distinct": true,
+          "id": "06da845d654e0a8c0073abf29443eac1d4eaeb24",
+          "message": "update bench.yml",
+          "timestamp": "2026-06-16T16:09:12-04:00",
+          "tree_id": "327683b86ebcce175abba57b7a8c78dc79fff154",
+          "url": "https://github.com/ozooma10/osf-cbpc/commit/06da845d654e0a8c0073abf29443eac1d4eaeb24"
+        },
+        "date": 1781640597229,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "solver/player (5 bones, scatter)",
+            "value": 62.2656,
+            "range": "± 3.76",
+            "unit": "ns/bone",
+            "extra": "median 62.66 ns, mean 63.02 ns"
+          },
+          {
+            "name": "solver/crowd (M2-scale)",
+            "value": 61.0877,
+            "range": "± 15.32",
+            "unit": "ns/bone",
+            "extra": "median 61.20 ns, mean 61.62 ns"
+          },
+          {
+            "name": "registry/current   1-thread",
+            "value": 31.3142,
+            "range": "± 0",
+            "unit": "ns/lookup",
+            "extra": "median 31.31 ns, mean 31.31 ns"
+          },
+          {
+            "name": "registry/snapshot  1-thread",
+            "value": 1.4188,
+            "range": "± 0",
+            "unit": "ns/lookup",
+            "extra": "median 1.42 ns, mean 1.42 ns"
           }
         ]
       }
