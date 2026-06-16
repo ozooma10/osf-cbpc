@@ -36,6 +36,11 @@ on:
 permissions:
   contents: write
 
+# The build/compare job is keyed per-ref and may cancel superseded runs freely.
+# The gh-pages publish job below uses its OWN serialized group instead (see
+# publish-trend.concurrency) so Pages deployments never overlap or get killed
+# mid-push -- an interrupted gh-pages push is what wedges the built-in
+# "pages build and deployment" workflow ("deployment in progress" errors).
 concurrency:
   group: bench-${{ github.ref }}
   cancel-in-progress: true
@@ -88,19 +93,39 @@ jobs:
             bench/current.json
             bench/opt.json
 
-      # --- historical trend: append to the time series on gh-pages + render charts ---
-      # Only on master (one authoritative point per merge) or a manual publish, so
-      # PR / feature-branch numbers never pollute the master trend.
+  # --- historical trend: append to the time series on gh-pages + render charts ---
+  # Split into its own job so it can serialize on a dedicated, NON-cancelling
+  # concurrency group. The gh-pages push triggers GitHub's built-in
+  # "pages build and deployment" workflow, which only allows ONE active Pages
+  # deployment at a time. Overlapping master pushes used to stack deployments and
+  # wedge one "in progress", failing every later deploy ("please cancel ... first").
+  # Serializing here -- and never cancelling a publish mid-push -- prevents that.
+  # Only runs on master (one authoritative point per merge) or a manual publish, so
+  # PR / feature-branch numbers never pollute the master trend.
+  publish-trend:
+    needs: bench
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && inputs.update_baseline)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: pages-deploy        # global across runs: serialize all gh-pages pushes
+      cancel-in-progress: false  # never kill a publish mid-push -- that wedges Pages
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download bench results
+        uses: actions/download-artifact@v4
+        with:
+          name: bench-results
+          path: bench
+
       - name: Convert results for trend
-        if: >-
-          github.event_name == 'push' ||
-          (github.event_name == 'workflow_dispatch' && inputs.update_baseline)
         run: python3 bench/to_gha.py --input bench/current.json --output bench/gha.json
 
       - name: Record trend (github-action-benchmark)
-        if: >-
-          github.event_name == 'push' ||
-          (github.event_name == 'workflow_dispatch' && inputs.update_baseline)
         uses: benchmark-action/github-action-benchmark@v1
         with:
           name: OSF Body Physics
@@ -117,9 +142,6 @@ jobs:
           fail-on-alert: false
 
       - name: Refresh committed baseline
-        if: >-
-          github.event_name == 'push' ||
-          (github.event_name == 'workflow_dispatch' && inputs.update_baseline)
         working-directory: bench
         run: |
           python3 - <<'PY'
