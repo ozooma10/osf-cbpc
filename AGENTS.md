@@ -51,6 +51,19 @@ the game's animation and with OSF Animation.
 - **[TODO] M4:** save-load DropAll sink; equip-rebind sink; OSF Body profile
   contract + the core-hosted extension-point refactor.
 
+## Branch naming
+
+When creating a git branch, use `type/short-description` with a kebab-case
+description. Type prefixes:
+- `feat/` — new features
+- `fix/` — bug fixes
+- `chore/` — tooling, build, and maintenance
+- `docs/` — documentation changes
+- `refactor/` — code restructuring with no behavior change
+
+Examples: `feat/capsule-collisions`, `fix/ticker-main-thread-marshalling`,
+`chore/bump-commonlibsf`.
+
 ## Gotchas
 
 - **Do NOT transpose** when writing rotations (NiTransform rows are byte-identical

@@ -127,9 +127,9 @@ namespace bench
 		std::printf("{\n  \"label\": \"%s\",\n  \"results\": [\n", a_label ? a_label : "");
 		for (std::size_t i = 0; i < rows.size(); ++i) {
 			const Stats& s = rows[i];
-			std::printf("    { \"name\": \"%s\", \"min_ns\": %.4f, \"median_ns\": %.4f, "
+			std::printf("    { \"name\": \"%s\", \"unit\": \"%s\", \"min_ns\": %.4f, \"median_ns\": %.4f, "
 						"\"p99_ns\": %.4f, \"mean_ns\": %.4f, \"ops_per_sec\": %.1f }%s\n",
-				s.label.c_str(), s.min_ns, s.median_ns, s.p99_ns, s.mean_ns, s.ops_per_sec,
+				s.label.c_str(), s.unit.c_str(), s.min_ns, s.median_ns, s.p99_ns, s.mean_ns, s.ops_per_sec,
 				i + 1 < rows.size() ? "," : "");
 		}
 		std::printf("  ]\n}\n");

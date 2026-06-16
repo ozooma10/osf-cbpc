@@ -10,5 +10,6 @@ build/
 # transient CI run output (the committed baseline lives in results/ci-baseline.json)
 current.json
 opt.json
+gha.json
 results/*.json
 !results/ci-baseline.json

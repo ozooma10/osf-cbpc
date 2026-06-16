@@ -29,7 +29,7 @@ on:
   workflow_dispatch:
     inputs:
       update_baseline:
-        description: 'Regenerate and commit bench/results/ci-baseline.json'
+        description: 'Refresh the committed baseline + record a trend data point'
         type: boolean
         default: false
 
@@ -87,6 +87,34 @@ jobs:
           path: |
             bench/current.json
             bench/opt.json
+
+      # --- historical trend: append to the time series on gh-pages + render charts ---
+      # Only on master (one authoritative point per merge) or a manual publish, so
+      # PR / feature-branch numbers never pollute the master trend.
+      - name: Convert results for trend
+        if: >-
+          github.event_name == 'push' ||
+          (github.event_name == 'workflow_dispatch' && inputs.update_baseline)
+        run: python3 bench/to_gha.py --input bench/current.json --output bench/gha.json
+
+      - name: Record trend (github-action-benchmark)
+        if: >-
+          github.event_name == 'push' ||
+          (github.event_name == 'workflow_dispatch' && inputs.update_baseline)
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: OSF Body Physics
+          tool: customSmallerIsBetter
+          output-file-path: bench/gha.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true                 # creates gh-pages on first run, then appends
+          benchmark-data-dir-path: dev/bench
+          # The hard PR gate is compare.py; here we only alert on a clear (1.5x)
+          # trend regression as a commit comment — never fail (it would be redundant
+          # and noisier than compare.py's stable-metric gate).
+          alert-threshold: '150%'
+          comment-on-alert: true
+          fail-on-alert: false
 
       - name: Refresh committed baseline
         if: >-
