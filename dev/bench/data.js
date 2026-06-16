@@ -2,7 +2,7 @@ window.BENCHMARK_DATA = {
   "lastUpdate": 1781629146947,
   "repoUrl": "https://github.com/ozooma10/osf-cbpc",
   "entries": {
-    "OSF Body Physics": [
+    "OSF CBPC": [
       {
         "commit": {
           "author": {
