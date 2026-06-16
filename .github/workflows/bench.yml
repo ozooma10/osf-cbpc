@@ -128,7 +128,7 @@ jobs:
       - name: Record trend (github-action-benchmark)
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          name: OSF Body Physics
+          name: OSF CBPC
           tool: customSmallerIsBetter
           output-file-path: bench/gha.json
           github-token: ${{ secrets.GITHUB_TOKEN }}
