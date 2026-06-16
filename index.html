@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OSF CBPC — Performance</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 50% -10%, #1b2433 0%, #0d1117 60%);
+      color: #e6edf3;
+    }
+    .card {
+      max-width: 640px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+    h1 { font-size: 2rem; margin: 0 0 .25rem; letter-spacing: -0.02em; }
+    .sub { color: #8b949e; margin: 0 0 2rem; font-size: 1.05rem; }
+    .links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    a.btn {
+      display: inline-block;
+      padding: .7rem 1.4rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform .08s ease, background .15s ease;
+    }
+    a.btn:hover { transform: translateY(-1px); }
+    a.primary { background: #238636; color: #fff; }
+    a.primary:hover { background: #2ea043; }
+    a.ghost { background: #21262d; color: #e6edf3; border: 1px solid #30363d; }
+    a.ghost:hover { background: #30363d; }
+    .foot { margin-top: 2.5rem; font-size: .85rem; color: #6e7681; }
+    .foot a { color: #58a6ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>OSF CBPC</h1>
+    <p class="sub">Body physics for Starfield — continuous performance benchmarks.</p>
+    <div class="links">
+      <a class="btn primary" href="./dev/bench/">View benchmark dashboard →</a>
+      <a class="btn ghost" href="https://github.com/ozooma10/osf-cbpc">Source on GitHub</a>
+    </div>
+    <p class="foot">
+      Charts track per-commit physics latencies on CI hardware, published automatically by the
+      <a href="https://github.com/ozooma10/osf-cbpc/blob/master/.github/workflows/bench.yml">bench workflow</a>.
+    </p>
+  </main>
+</body>
+</html>
